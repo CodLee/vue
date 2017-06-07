@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue事件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="../common/bootstrap.min.css">
+    <script src="../common/jquery-1.7.2.js"></script>
+    <script src="../common/bootstrap.js"></script>
+
+    <script src="../common/vue.js"></script>
+    <script>
+        window.onload=function(){
+            new Vue({
+                el:'#box',
+                data:{
+                    myData:[],
+                    username:'',
+                    age:'',
+                    nowIndex:-100
+                },
+                methods:{
+                    add:function(){
+                        this.myData.push({
+                            name:this.username,
+                            age:this.age
+                        });
+
+                        this.username='';
+                        this.age='';
+                    },
+                    deleteMsg:function(n){
+                        if(n==-2){
+                            this.myData=[];
+                        }else{
+                            this.myData.splice(n,1);
+                        }
+                    },
+                    show:function(ev,el){
+                        console.info(ev);
+                        console.info(el);
+                    },
+                    click1:function(ev){
+                        if(ev){
+                            ev.cancelBubble=true;
+                        }
+                        console.log('点击了button');
+                    },
+                    click2:function(){
+                        console.log('点击div');
+                    },
+                    click3:function(ev){
+                        if(ev){
+                            ev.preventDefault();
+                        }
+                        console.info('右击');
+                    },
+                    keyup:function(ev){
+                        if(ev&&ev.keyCode==13){
+                            alert('您按了回车键！');
+                        }
+                        alert('keyup.enter');
+                    }
+
+                }
+            });
+        };
+    </script>
+</head>
+<body>
+    <div class="container" id="box">
+        <p>快捷事件：：@click--@contextmenu---@keyup---@keydown</p><p>
+            <b>$event</b>实参事件对象：
+        </p>
+        <p>$event.keyCode == 13 回车键</p>
+        <input type="button" value="按钮" v-on:click='show()'>
+        <br>
+        <input type="button" value="按钮" @click='show()'>
+        <p>
+            事件对象：$event,必须写成$event
+            <input type="button" value="按钮" @click='show($event,123)'>
+        </p>
+        <div class="text-danger bordered" @click='click2()'>
+            <p>事件冒泡 ev.cancelBubble</p>
+            <button @click='click1($event)'>冒泡</button>
+            <button @click.stop='click1()'>冒泡</button>
+        </div>
+        <div class='bg-success text-warning'>
+            <p>右键 组织默认行为</p>
+            <p><a href="" class='bg-success center-block'>链接的背景色</a></p>
+            <button @contextmenu='click3($event)'>右键</button>
+            <button @contextmenu='click3($event)'>右键</button>
+        </div>
+        <div>
+            <label for="">@keyup.enter....</label>
+            <input type="text" @keyup ='keyup($event)'>
+            <input type="text" @keyup.enter ='keyup()' placeholder='keyup.enter'>
+            <input type="text" @keyup.left ='keyup()' placeholder='keyup.left'>
+        </div>
+
+        <div>
+            <img src="../img/img.jpg"  alt="" class='img-responsive img-thumbnail img-circle'>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

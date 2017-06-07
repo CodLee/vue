@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue事件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="../common/bootstrap.min.css">
+    <script src="../common/jquery-1.7.2.js"></script>
+    <script src="../common/bootstrap.js"></script>
+
+    <script src="../common/vue.js"></script>
+    <script src="../common/vue-resource.js"></script>
+    <script>
+        window.onload=function(){
+            new Vue({
+                el:'#box',
+                data:{
+                    list:[],
+                    t1:'',
+                    cur:-1,
+                    http:false
+                },
+                methods:{
+                    get:function(ev){
+                        if(ev.keyCode == 38 || ev.keyCode== 40) return;
+                            this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{
+                                wd:this.t1
+                            },{
+                                jsonp:'cb'  //callback名字，默认名字就是"callback"
+                            }).then(function(res){
+                                this.http=false;
+                                this.cur = -1;
+                                this.list=res.data.s
+                            },function(res){
+                                this.list=[];
+                                this.http = true;
+                                // alert('网络请求失败！');
+                            });
+                    },
+                    chosedown:function(){
+                        this.cur = ++this.cur  % this.list.length;
+                        this.t1= this.list[this.cur]
+                    },
+                    choseup:function(){
+                        this.cur= (--this.cur +this.list.length) % this.list.length ;
+                        this.t1=this.list[this.cur];
+                    },
+                    chouse:function(index){
+                        this.cur = index;
+                        this.t1=this.list[this.cur];
+                        this.get('$event');
+                    }
+
+
+                }
+            });
+        };
+    </script>
+    <style>
+        .red-color{
+            color:red;
+        }
+        .bg-success{
+            background-color: #66c147;
+        }
+        .grey{
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <p></p>
+    <div class="container" id="box" >
+
+        <input type="text" @keyup='get($event)' v-model='t1' @keyup.down='chosedown($event)' @keyup.up='choseup($event)'>
+        <ul>
+            <li v-for='item in list' :class='{grey:$index == cur}' @click='chouse($index)'>
+                {{item}}
+            </li>
+        </ul>
+        <p v-show='list.length==0'>暂无数据>>>>>>>>></p>
+        <p v-show='http'>网络异常>>>>>>>>>>>>>></p>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

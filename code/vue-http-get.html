@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue事件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="../common/bootstrap.min.css">
+    <script src="../common/jquery-1.7.2.js"></script>
+    <script src="../common/bootstrap.js"></script>
+
+    <script src="../common/vue.js"></script>
+    <script src="../common/vue-resource.js"></script>
+    <script>
+        window.onload=function(){
+            new Vue({
+                el:'#box',
+                data:{
+                    myData:[],
+                    username:'',
+                    age:'',
+                    nowIndex:-100,
+                    url:'../img/img.jpg',
+                    w:'100px',
+                    title:'四川瓜娃子',
+                    color:{
+                        red:'red-color',
+                        bg:'bg-success'
+                    },
+                    t:true,
+                    f:false,
+                    json:{
+                        "red-color":true,
+                        "bg-success":false
+                    },
+                    style:{
+                        color:{color:'red','font-size':'20px'},
+                        bg:{'background':'#ccc'}
+                    },
+                    msg:'msg的数据'
+                },
+                methods:{
+                    add:function(){
+                        this.myData.push({
+                            name:this.username,
+                            age:this.age
+                        });
+
+                        this.username='';
+                        this.age='';
+                    },
+                    deleteMsg:function(n){
+                        if(n==-2){
+                            this.myData=[];
+                        }else{
+                            this.myData.splice(n,1);
+                        }
+                    },
+                    show:function(ev,el){
+                        console.info(ev);
+                        console.info(el);
+                    },
+                    click1:function(ev){
+                        if(ev){
+                            ev.cancelBubble=true;
+                        }
+                        console.log('点击了button');
+                    },
+                    click2:function(){
+                        console.log('点击div');
+                    },
+                    click3:function(ev){
+                        if(ev){
+                            ev.preventDefault();
+                        }
+                        console.info('右击');
+                    },
+                    keyup:function(ev){
+                        if(ev&&ev.keyCode==13){
+                            alert('您按了回车键！');
+                        }
+                        alert('keyup.enter');
+                    },
+                    get:function(){
+                        this.$http.get('a.txt').then(function(res){
+                            alert('success'+res.data);
+                        },function(req){
+                            alert('失败'+req.status);
+                            console.info(req);
+                        });
+                    },
+                    get1:function(){
+                        this.$http.get('get.php',{
+                            a:2,b:5
+                        }).then(function(res){
+                            alert('success'+res.data);
+                        },function(req){
+                            alert(req)
+                        });
+                    },
+                    post:function(){
+                        this.$http.post('post.php',{
+                            a:12,b:20
+                        },{
+                            emulateJSONP:true
+                        }).then(function(res){
+                            alert(res.data);
+                        },function(req){
+                            alert('fail'+req.data);
+                        });
+                    },
+                    jsonp:function(){
+                        this.$http.jsonp('https://sug.so.360.cn/suggest',{
+                           word:'a' 
+                        },{
+
+                        }).then(function(res){
+                            alert('success——'+res.data.s);
+                            console.info(res.data);
+                        },function(req){
+                            alert('fail'+req);
+                        })
+                    },
+                    jsonp1:function(){
+                        this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{
+                            wd:'a'
+                        },{
+                            jsonp:'cb'  //callback名字，默认名字就是"callback"
+                        }).then(function(res){
+                            alert(res.data.s);
+                        },function(res){
+                            alert(res.status);
+                        });
+                    }
+
+
+                }
+            });
+        };
+    </script>
+    <style>
+        .red-color{
+            color:red;
+        }
+        .bg-success{
+            background-color: #66c147;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="box">
+    <p>$http 要引入vue-resource.js</p>
+        <input type="button" @click='get()' value='$http'>
+    <p>$http 发送数据</p>
+        <input type="button" @click='get1()' value='$http'>
+    
+    <p>$http.post 发送数据</p>
+        <input type="button" @click='post()' value='$http'>
+
+<p>$http.jsonp 发送数据</p>
+        <input type="button" @click='jsonp()' value='$http---360'>
+
+
+
+<p>$http.jsonp 发送数据</p>
+        <input type="button" @click='jsonp1()' value='$http---百度'>
+
+
+
+
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
