@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue事件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="../common/bootstrap.min.css">
+    <script src="../common/jquery-1.7.2.js"></script>
+    <script src="../common/bootstrap.js"></script>
+
+    <script src="../common/vue.js"></script>
+    <script src="../common/vue-resource.js"></script>
+    <link rel="stylesheet" href="../css/weibo.css">
+    <script>
+        window.onload=function(){
+            var vm = new Vue({
+                el:'#box',
+                data:{
+                    URL:'weibo.php',
+                    t1:'',
+                    msgdata:{
+                        
+                    }
+
+                },
+                methods:{
+                    add:function(){
+                        alert(1);
+                        this.$http({
+                            url:URL,
+                            data:{
+                                act:'add',
+                                content:this.t1
+                            }
+                        }).then(function(res){
+
+                        },function(req){
+
+                        });
+                    }
+                }
+            })
+        };
+    </script>
+    <style>
+        .red-color{
+            color:red;
+        }
+        .bg-success{
+            background-color: #66c147;
+        }
+        .grey{
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <p></p>
+    <div class="container" id="box" >
+    <!-- 留言 -->
+            <textarea v-model='t1'   name='textarea'  class='takeTextField' id='tijiaoText'></textarea>
+            <div class="takeSbmComment">
+                <input type="button" class='inputs' value='提交' @click='add()'>
+                <span>可按 enter 回复</span>
+            </div>
+            <!-- 已留 -->
+            <div class="commentOn">
+                <div class="noConntent">暂无留言</div>
+                <div class="messList">
+                    <div class="reply">
+                        <p class="replyContent">
+                            留言留言
+                        </p>
+                    </div>
+                </div>
+            </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
