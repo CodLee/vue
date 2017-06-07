@@ -28,6 +28,10 @@
                 methods:{
                     get:function(ev){
                         if(ev.keyCode == 38 || ev.keyCode== 40) return;
+                        if(ev.keyCode==13){
+                            window.open('https://www.baidu.com/s?wd='+this.t1);
+                            this.t1='';
+                        }
                             this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{
                                 wd:this.t1
                             },{
