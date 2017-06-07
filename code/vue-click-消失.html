@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue</title>
+	<script src="../common/vue.js"></script>
+	<script>
+	window.onload=function(){
+		var vm = new Vue({
+			el:'#box',/*选择器*/
+			data:{/*数据*/
+				msg:'welcome vue',
+				msg1:12,
+				msg2:true,
+				arr:['apple','orange','banana'],
+				json:{
+					"a":"apple","b":"banana","c":"car"
+				}
+			},
+			methods:{
+				show:function(){
+					this.msg2=!this.msg2;
+				},
+				add:function(){
+					console.info(this);
+					this.arr.push('tomato'+ new Date());
+				}
+			}
+		});
+	}
+	</script>
+</head>
+<body>
+	<p>v-model表单元素</p>
+	<p>v-show </p>
+	<div id="box">
+		<input type="button" value='按钮' v-on:click='show()'>
+		<ul v-show='msg2'>
+			<li v-for='v in arr'>
+				{{v}}
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

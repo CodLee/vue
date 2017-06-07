@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue</title>
+	<link rel="stylesheet" href="../common/bootstrap/css/bootstrap.min.css">
+	<script src='../common/jquery-1.11.0.min.js'></script>
+	<script src='../common/bootstrap/js/bootstrap.min.js'></script>
+	<script src="../common/vue.js"></script>
+	<script src='../common/vue-resource.js'></script>
+	<script>
+	window.onload=function(){
+		var vm = new Vue({
+			el:'#box',/*选择器*/
+			data:{/*数据*/
+				msg:'welcome vue',
+				msg1:12,
+				msg2:true,
+				arr:['apple','orange','banana'],
+				json:{
+					"a":"apple","b":"banana","c":"car"
+				}
+			},
+			methods:{
+				show:function(){
+					this.msg2=!this.msg2;
+				},
+				add:function(){
+					console.info(this);
+					this.arr.push('tomato'+ new Date());
+				},
+				get:function(){
+					this.$http.get('a.txt').then(function(res){
+						alert(res.data);
+						console.info(res.status);
+					},function(res){
+						alert(res.data);
+                        console.info(res);
+                        console.info(res.status);
+					})
+				}
+			}
+		});
+	}
+	</script>
+</head>
+<body>
+	<div id="box">
+		<p>引入vue,vue-resource</p>
+		<p>$http.gets</p>
+		<input type="button" value='按钮' @click='get()'>
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue</title>
+	<script src="../common/vue.js"></script>
+	<script>
+	window.onload=function(){
+		var vm = new Vue({
+			el:'#box',/*选择器*/
+			data:{/*数据*/
+				msg:'welcome vue'
+			}
+		});
+	}
+	</script>
+</head>
+<body>
+	<div id="box">
+		{{msg}}
+	</div>
+</body>
+</html>

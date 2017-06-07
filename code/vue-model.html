@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue</title>
+	<script src="../common/vue.js"></script>
+	<script>
+	window.onload=function(){
+		var vm = new Vue({
+			el:'#box',/*选择器*/
+			data:{/*数据*/
+				msg:'welcome vue'
+			}
+		});
+	}
+	</script>
+</head>
+<body>
+	<p>v-model表单元素</p>
+	<div id="box">
+		<input type="text" v-model='msg'>
+		{{msg}}
+	</div>
+</body>
+</html>
