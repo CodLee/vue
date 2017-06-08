@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue事件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="../common/bootstrap.min.css">
+    <script src="../common/jquery-1.7.2.js"></script>
+    <script src="../common/bootstrap.js"></script>
+
+    <script src="../common/vue.js"></script>
+    <script>
+        window.onload=function(){
+            var vm = new Vue({
+                'zidngyi':'自定义的数据options',
+                data:{
+                    created:'实例已经创建，data,methods',
+                    beforeCompile:'编译之前',
+                    compiled:'编译之后',
+                    ready:'插入文档中',
+                    boforeDestroy:'销毁之前',
+                    destroyed:'销毁之后',
+                    times:0,
+                    aa:'',
+                    cc:'',
+                    list:[],
+                    _this:this
+                },
+                methods:{
+                    add:function(){
+                    },
+                    change:function(){
+                        this.bb += 1;
+                    },
+                    selfs:function(){
+                        return this;
+                    }
+                },
+                computed:{
+                    bb:{
+                        get:function(){
+                            console.info('get');
+                            return +this.aa+3;
+                        },
+                        set:function(val){
+                            console.info('set');
+                            this.aa = val;
+                            this.cc = this.aa+1;
+                        }
+                    }
+                },
+                created:function(){
+                    this.list.push('created');
+                    var _this = this;
+                    setTimeout(function(){
+                        _this.times =1;
+                    },1000)
+                },
+                beforeCompile:function(){
+                    this.list.push('beforeCompile');
+                    var _this = this;
+                    setTimeout(function(){
+                        _this.times =2;
+                    },1000)
+
+                },
+                ready:function(){
+                    this.list.push('ready');
+                    var _this = this;
+                    setTimeout(function(){
+                        _this.times =4;
+                    },1000)
+
+                },
+                compiled:function(){
+                    this.list.push('compiled');
+                    this.list.push('compiled');
+                    var _this = this;
+                    setTimeout(function(){
+                        _this.times =3;
+                    },1000)
+
+                },
+                beforeDestroy:function(){
+                    alert('beforeDestroy');
+                    this.list.push('beforeDestroy');
+                    var _this = this;
+                    setTimeout(function(){
+                        _this.times =5;
+                    },1000)
+
+                },
+                destroyed:function(){
+                    alert('destroyed');
+                    console.info(this);
+                    this.list.push('destroyed');
+                    var _this = this;
+                    setTimeout(function(){
+                        _this.times =6;
+                    },1000);
+                    console.info(this.list);
+
+                }
+            }).$mount('#box');
+            destroyed =function(){
+                vm.$destroy();
+
+            }
+            console.info(vm);
+            console.info(vm.$options);
+        };
+    </script>
+    <style>
+        .red-color{
+            color:red;
+        }
+        .bg-success{
+            background-color: #66c147;
+        }
+        .red{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="box">
+        <div class="bordered">
+            <p class="title">计算属性</p>
+            <input type="text" v-model= 'aa' placeholder='aa'>
+            <p>computed bb因aa而改变 --->aa——{{aa}} bb——{{bb}} cc——{{cc}} </p>
+            <button @click='change()'>点击bb +1</button>
+            <p> computed 执行 set  然后执行 get </p>
+            
+        </div>
+
+        <ul>
+            <li :class='{red:times==0}'>ready? go</li>
+            <li :class='{red:times==1}'>{{created}}</li>
+            <li :class='{red:times==2}'>{{beforeCompile}}</li>
+            <li :class='{red:times==3}'>{{compiled}}</li>
+            <li :class='{red:times==4}'>{{ready}}</li>
+            <li :class='{red:times==5}'>{{boforeDestroy}}</li>
+            <li :class='{red:times==6}' v-text='destroyed'></li>
+            <button onclick='destroyed()'>销毁</button>
+        </ul>
+        <ol>
+            <p>循环--》track-by='$index' 可输出重复 </p>
+            <li v-for='item in list' track-by='$index'>
+                {{$index}}————{{item}}
+            </li>
+        </ol>
+        <p>$options:{{$options.zidngyi}}</p>
+        <p>$data :{{$data.aa}}</p>
+        <p>vm.$mount('xx')  挂载</p>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

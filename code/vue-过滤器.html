@@ -17,76 +17,13 @@
     <script>
         window.onload=function(){
             new Vue({
-                el:'#box',
                 data:{
-                    myData:[],
-                    username:'',
-                    age:'',
-                    nowIndex:-100,
-                    url:'../img/img.jpg',
-                    w:'100px',
-                    title:'四川瓜娃子',
-                    color:{
-                        red:'red-color',
-                        bg:'bg-success'
-                    },
-                    t:true,
-                    f:false,
-                    json:{
-                        "red-color":true,
-                        "bg-success":false
-                    },
-                    style:{
-                        color:{color:'red','font-size':'20px'},
-                        bg:{'background':'#ccc'}
-                    },
-                    msg:'msg的数据'
+                    list:[1,2,3,4,5,8,32,1,4,6,3,5,23]
                 },
                 methods:{
-                    add:function(){
-                        this.myData.push({
-                            name:this.username,
-                            age:this.age
-                        });
-
-                        this.username='';
-                        this.age='';
-                    },
-                    deleteMsg:function(n){
-                        if(n==-2){
-                            this.myData=[];
-                        }else{
-                            this.myData.splice(n,1);
-                        }
-                    },
-                    show:function(ev,el){
-                        console.info(ev);
-                        console.info(el);
-                    },
-                    click1:function(ev){
-                        if(ev){
-                            ev.cancelBubble=true;
-                        }
-                        console.log('点击了button');
-                    },
-                    click2:function(){
-                        console.log('点击div');
-                    },
-                    click3:function(ev){
-                        if(ev){
-                            ev.preventDefault();
-                        }
-                        console.info('右击');
-                    },
-                    keyup:function(ev){
-                        if(ev&&ev.keyCode==13){
-                            alert('您按了回车键！');
-                        }
-                        alert('keyup.enter');
-                    }
 
                 }
-            });
+            }).$mount('#box');
         };
     </script>
     <style>
@@ -106,6 +43,25 @@
         <p>系统提供过滤器 |lowercase----- {{'WelcOme'|}}</p>
         <p>系统提供过滤器 首字母大写 |capitalize----- {{'welcome'|capitalize}}</p>
         <p>系统提供过滤器 首字母大写 |lowercase|capitalize----- {{'WELCOME'|lowercase|capitalize}}</p>
+        <p>list = [1,2,3,4,5,8,32,1,4,6,3,5,23] </p>
+        <div>  
+            <p>xxx | limitBy 3</p> 
+            <ul>
+                <li v-for='item in list| limitBy 3'>{{item}}</li>
+            </ul>
+        </div>
+        <div>  
+            <p>xxx | limitBy 3 4</p> 
+            <ul>
+                <li v-for='item in list| limitBy 3 4'>{{item}}</li>
+            </ul>
+        </div>
+        <div>  
+            <p>xxx | filterBy 3 | orderBy 1</p> 
+            <ul>
+                <li v-for='item in list| filterBy 3 |orderBy 1'>{{item}}</li>
+            </ul>
+        </div>
         
     </div>
 </body>
