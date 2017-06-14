@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue组件--动态组件</title>
+	<link rel="stylesheet" href="../../common/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../common/animate/animate.min.css">
+	<script src="../../common/vue/dist/vue.js"></script>
+	<style>
+
+	</style>
+</head>
+<body>
+<p></p>
+<div class="container">
+	<input type="date"/> 
+	<div id="box">
+		<button @click='change'>切换</button>
+		<!-- <button>bbb</button> -->
+		<hr>
+		<p>:is=‘组件名称’</p>
+		<component :is='msg?"aaa":"bbb"'></component>	
+	</div>
+
+</div>
+	<template id='bbb'>
+		<h1>title</h1>
+		<ul>
+			<li v-for='item in list'>{{item}}</li>
+		</ul>
+	</template>
+	
+	<script>
+
+		new Vue({
+			data:{
+				msg:false
+			},
+			methods:{
+				change(){
+
+					this.msg=!this.msg;
+				}
+			},
+			components:{
+				aaa:{
+					template:'<h2>aa组件</h2>'
+				},
+				bbb:{
+					template:'<h2>bb组件</h2>'
+				}
+
+			}
+		
+		}).$mount('#box');
+	</script>
+</body>
+</html>

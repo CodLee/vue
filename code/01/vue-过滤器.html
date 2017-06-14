@@ -18,10 +18,14 @@
         window.onload=function(){
             new Vue({
                 data:{
-                    list:[1,2,3,4,5,8,32,1,4,6,3,5,23]
+                    input:'',
+                    list:[1,2,3,4,5,8,32,1,4,6,3,5,23],
+                    json:{name:'lee',age:18}
                 },
                 methods:{
-
+                    show:function(){
+                        alert('debounce///延迟')
+                    }
                 }
             }).$mount('#box');
         };
@@ -37,12 +41,15 @@
 </head>
 <body>
     <div class="container" id="box">
+        <p @click='show()|debounce 1000'>系统提供过滤器 |debounce 配合事件-----</p>
         <p>系统提供过滤器 |uppercase----- {{'welcome'|uppercase}}</p>
         <p>系统提供过滤器 |currency----- {{12344|currency}}</p>
         <p>系统提供过滤器 |currency '￥'----- {{12344|currency '￥'}}</p>
         <p>系统提供过滤器 |lowercase----- {{'WelcOme'|}}</p>
         <p>系统提供过滤器 首字母大写 |capitalize----- {{'welcome'|capitalize}}</p>
         <p>系统提供过滤器 首字母大写 |lowercase|capitalize----- {{'WELCOME'|lowercase|capitalize}}</p>
+        <p>系统提供过滤器 json |----- {{json| json }}</p>
+
         <p>list = [1,2,3,4,5,8,32,1,4,6,3,5,23] </p>
         <div>  
             <p>xxx | limitBy 3</p> 
@@ -58,8 +65,10 @@
         </div>
         <div>  
             <p>xxx | filterBy 3 | orderBy 1</p> 
+            <p>xxx | filterBy "变量" | orderBy 1</p> 
+            <input type="text" v-model='input'><span>{{input}}</span>
             <ul>
-                <li v-for='item in list| filterBy 3 |orderBy 1'>{{item}}</li>
+                <li v-for='item in list| filterBy "input" |orderBy 1'>{{item}}</li>
             </ul>
         </div>
         

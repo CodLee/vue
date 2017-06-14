@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue动画</title>
+	<script src="../../common/vue/dist/vue.js"></script>
+	<style>
+		#box1{
+			width: 100px;
+			height: 100px;
+			background-color: #ccc;
+		}
+		.fade-transition{
+			transition:1s all ease;
+		}
+		.fade-enter{
+			opacity: 0;
+		}
+		.fade-leave{
+			opacity: 0;
+			transform:translateX(200px);
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+	<a href="?key1=1&key2=2&查询=search">点击跳转本页面</a> 
+	<button onclick='show()'>点击显示查询字符串</button>
+	<hr>
+		<input type="button" value="点击动画" @click='toggle()'>
+		<div id="box1" v-show='bSign' transition='fade'></div>
+	</div>
+	<script>
+		new Vue({
+			data:{
+				bSign:true
+			},
+			methods:{
+				toggle:function(){
+					this.bSign=!this.bSign;
+				}
+			}
+		}).$mount('#box');
+
+
+		var obj={
+			key:1,
+			key2:2,
+			key3:3,
+			key4:1,
+			key5:2,
+			key6:3
+		}
+		var jsonstr = JSON.stringify(obj)
+		for(p in obj){
+			if(p!='key'&&p!='key2'){
+				console.info(p,obj[p]);
+			}
+			if(p =='key'||p=='key2'){
+				console.info(p,obj[p]);
+			}
+		}
+		console.info(jsonstr);
+		var jsonobj= JSON.parse(jsonstr);
+		console.info(jsonobj);
+
+		function show(){
+			console.info(window.location);
+			console.info(searchToObj(window.location.search));
+			console.info(window.location.search);
+			console.info(parseQueryString(window.location.href));
+		}
+		/*查询字符串格式为 ?key=val&key=val*/
+		function searchToObj(str){
+			var obj={};
+			var arr=str.substr(1).split('&');
+			console.info(arr);
+			for(var i=0;i<arr.length;i++){
+				obj[arr[i].split('=')[0]]=arr[i].split('=')[1];
+			}
+			return obj;
+		}
+
+		/*查询字符串解析*/
+		function parseQueryString(url){
+		    var arr;
+		    var res = {};
+		    //#符号之后的值称为hash，都不会加到request请求中去
+		    url = url.split('#')[0];
+		    //获取queryString 第一个？号后面的全是查询字符串
+		    arr = url.split('?');
+		    arr.shift();
+		    var queryStr = arr.join('?');
+		    //查询字符串为空直接返回 避免出现这样的返回值{"":""}
+		    if (queryStr.trim().length == 0){
+		        return res;
+		    }
+
+		    //获取参数
+		    arr = queryStr.split('&');
+		    for (var i = 0; i <  arr.length; i++) {
+		        var itemArr = arr[i].split('=');
+		        //第一个=号之前的是name 后面的全是值
+		        var name = itemArr.shift();
+		        var value = itemArr.join('=');
+		        res[name] = value;
+		    }
+		    return res;
+		}
+
+	</script>
+</body>
+</html>

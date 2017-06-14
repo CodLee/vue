@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue事件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="../common/bootstrap.min.css">
+    <script src="../common/jquery-1.7.2.js"></script>
+    <script src="../common/bootstrap.js"></script>
+
+    <script src="../common/vue.js"></script>
+    <script>
+        window.onload=function(){
+            Vue.filter('toDou',function(input,a,b){
+                return input<10?'0'+input:''+input;
+            });
+            Vue.filter('filterHtml',{
+                // return input.replace(/<[^<+]>/g,'');
+                read:function(input){
+                    // model——view
+                    return input.replace(/<[^<]+>/g,'')
+                },
+                write:function(val){//view——moedl
+                    console.info(val);
+                    return val;
+                }
+            });
+            new Vue({
+                data:{
+                    input:'',
+                    list:[1,8,32,3,5,23],
+                    msg:'<strong>123</strong>'
+                },
+                methods:{
+                    show:function(){
+                        alert('debounce///延迟')
+                    }
+                }
+            }).$mount('#box');
+        };
+    </script>
+    <style>
+        .red-color{
+            color:red;
+        }
+        .bg-success{
+            background-color: #66c147;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="box">
+        <p>自定义时间过滤器</p>
+        <input type="text" v-model='msg | filterHtml'>
+        <p v-html='msg'></p>
+        <p>{{msg}}</p>
+
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

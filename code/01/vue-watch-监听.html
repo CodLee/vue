@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue事件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="../common/bootstrap.min.css">
+    <script src="../common/jquery-1.7.2.js"></script>
+    <script src="../common/bootstrap.js"></script>
+
+    <script src="../common/vue.js"></script>
+    <script>
+        window.onload=function(){
+           var vm=  new Vue({
+                data:{
+                    msg:'message'
+                    ,msg1:''
+                    ,json:{name:'lee',age:18}
+                },
+                methods:{
+                    show:function(ev){
+                        alert(ev.keyCode);
+                    },
+                    add:function(){
+                        this.msg=123;
+                        alert('123');
+                    },
+                    jsons:function(){
+                        this.json.name='Lee';
+                    }
+                }
+            }).$mount('#box');
+
+           vm.$watch('msg',function(){
+                console.info(this);
+                this.$data.msg1=1234567;
+                alert('a发生了变化');
+           });
+           vm.$watch('json',function(){
+                console.info(this);
+                alert('监听对象发生了变化需要深度监听');
+           },{deep:true});
+        };
+    </script>
+    <style>
+        .red-color{
+            color:red;
+        }
+        .bg-success{
+            background-color: #66c147;
+        }
+    </style>
+</head>
+<body>
+    <p></p>
+    <div class="container" id="box">
+       <p>{{msg}}</p>
+       <p>msg1——{{msg1}}</p>
+       <button @click='add()'>点击监听变化</button>
+       <p>{{json|json}}</p>
+       <button @click='jsons()'>json $watch(name,fn,{deep:true})</button>
+       
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

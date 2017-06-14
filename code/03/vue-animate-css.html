@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue动画</title>
+	<link rel="stylesheet" href="../../common/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../common/animate/animate.min.css">
+	<script src="../../common/vue/dist/vue.js"></script>
+	<style>
+		#box1{
+			width: 100px;
+			height: 100px;
+			background-color: #ccc;
+		}
+		.fade-transition{
+			transition:1s all ease;
+		}
+		.fade-enter{
+			opacity: 0;
+		}
+		.fade-leave{
+			opacity: 0;
+			transform:translateX(200px);
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	
+
+	<div id="box">
+		<input type="button" value="点击动画" @click='toggle()'>
+		<div id="box1" v-show='bSign' class='animated' transition='fade1'></div>
+	</div>
+</div>
+	<script>
+		new Vue({
+			data:{
+				bSign:true
+			},
+			methods:{
+				toggle:function(){
+					this.bSign=!this.bSign;
+				}
+			},
+			transitions:{
+				/*定义动画名称*/
+				fade1:{
+					enterClass:'zoomInLeft',
+					leaveClass:'zoomOutRight'
+				}
+			}
+		}).$mount('#box');
+	</script>
+</body>
+</html>

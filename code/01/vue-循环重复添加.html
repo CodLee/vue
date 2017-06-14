@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue事件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="../common/bootstrap.min.css">
+    <script src="../common/jquery-1.7.2.js"></script>
+    <script src="../common/bootstrap.js"></script>
+
+    <script src="../common/vue.js"></script>
+    <script src="../common/vue-resource.js"></script>
+    <script>
+        window.onload=function(){
+           var vm =  new Vue({
+                aa:'$options的属性',
+                el:'#box',
+                data:{
+                    list:['apple','orange'],
+                    t1:'',
+                    cur:-1,
+                    http:false,
+                    fruit:''
+                },
+                methods:{
+                    get:function(ev){
+                  
+                    },
+                    add:function(ev){
+                        ev.preventDefault();
+                        if(this.fruit){
+                            this.list.push(this.fruit);
+                            this.fruit='';
+                            console.log(vm.$log());
+                            
+                        }else{
+
+                        }
+                    }
+                }
+            });
+           console.log(vm.$el);
+           console.log(vm.$data);
+        };
+    </script>
+    <style>
+        .red-color{
+            color:red;
+        }
+        .bg-success{
+            background-color: #66c147;
+        }
+        .grey{
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <p></p>
+    <div class="container" id="box" >
+        <form >
+            <div class="form-group">
+                <label for="">名称</label>
+                <input type="text" v-model='fruit'>
+            </div>
+                <button @click='add($event)'>添加</button>
+        </form>
+        <ul>
+            <li v-for='item in list' track-by='$index'>{{item}}</li>
+        </ul>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

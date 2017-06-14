@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue组件</title>
+	<link rel="stylesheet" href="../../common/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../common/animate/animate.min.css">
+	<script src="../../common/vue/dist/vue.js"></script>
+	<style>
+		#box1{
+			width: 100px;
+			height: 100px;
+			background-color: #ccc;
+		}
+		.fade-transition{
+			transition:1s all ease;
+		}
+		.fade-enter{
+			opacity: 0;
+		}
+		.fade-leave{
+			opacity: 0;
+			transform:translateX(200px);
+		}
+	</style>
+</head>
+<body>
+<p></p>
+<div class="container">
+	<div id="box">
+	<hr>
+		<p><aaa></aaa></p>
+		<p><bbb></bbb></p>
+	</div>
+</div>
+	<script>
+	var Aaa = Vue.extend({
+		template:'<Lee>这是自定义组件aaa</Lee>'
+	});
+	var A = new Aaa();
+	console.info(A);
+
+	Vue.component('aaa',Aaa);
+
+	Vue.component('bbb',{
+		/*data:{
+			msg:'组件bbb的数据'
+		},
+		data：必须是函数，且返回值为对象
+		*/
+		data(){
+			return {
+				msg:'组件bbb的data',
+
+			}
+		},
+		methods:{
+			change(){
+				this.msg = '改变了组件的bbb数据'
+			}
+		},
+		template:'<Lee @click="change">这是自定义组件bbb——————{{msg}}——点我</Lee>'
+	});
+
+
+
+		new Vue({
+			data:{
+				bSign:true
+			},
+			methods:{
+				toggle:function(){
+					this.bSign=!this.bSign;
+				}
+			},
+			transitions:{
+				/*定义动画名称*/
+				fade1:{
+					enterClass:'zoomInLeft',
+					leaveClass:'zoomOutRight'
+				}
+			}
+		}).$mount('#box');
+	</script>
+</body>
+</html>

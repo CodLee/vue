@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue组件--动态组件</title>
+	<link rel="stylesheet" href="../../common/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../common/animate/animate.min.css">
+	<script src="../../common/vue/dist/vue.js"></script>
+	<style>
+
+	</style>
+</head>
+<body>
+<p></p>
+<div class="container">
+	<input type="date"/> 
+	<div id="box">
+		<button @click='change'>切换</button>
+		<!-- <button>bbb</button> -->
+		<hr>
+		<p>:is=‘组件名称’</p>
+		<p>默认情况下，子组件无法访问父组件的数据</p>
+		<p>利用属性传递父子组件间的数据 props:</p>
+		<!-- <component :is='msg?"aaa":"bbb"'></component>	 -->
+		<component :is='"aaa"' :msg0='list'></component>
+	</div>
+
+</div>
+	<template id='bbb'>
+		<h1>title---{{msg1}}</h1>
+		<ul>
+			<li v-for='item in msg0'>{{item}}</li>
+		</ul>
+		<bbbs :m='msg1' :n='num'></bbbs>
+	</template>
+	
+	<script>
+
+		new Vue({
+			data:{
+				msg:false,
+				list:[1,2,3,4,5]
+			},
+			methods:{
+				change(){
+
+					this.msg=!this.msg;
+				}
+			},
+			components:{
+				aaa:{
+					props:['msg0'],
+					data(){
+						return {
+							msg1:'父组件的数据',
+							num:123
+						}
+					},
+					template:'#bbb',
+					components:{
+						bbbs:{
+							props:{
+								'm':String,
+								n:Number
+							},
+							data(){
+								return {
+									msg2:'子组件的数据'
+								}
+							},
+							template:'<h2>嵌套的bb组件——{{m+n}}---{{msg2}}</h2>'
+						}
+					}
+				}
+			}
+		
+		}).$mount('#box');
+	</script>
+</body>
+</html>

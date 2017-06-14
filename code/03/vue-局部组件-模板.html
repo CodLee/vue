@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue组件--局部</title>
+	<link rel="stylesheet" href="../../common/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../common/animate/animate.min.css">
+	<script src="../../common/vue/dist/vue.js"></script>
+	<style>
+
+	</style>
+</head>
+<body>
+<p></p>
+<div class="container">
+	<input type="date" name="user_date" /> 
+	<div id="box">
+	<hr>
+		<p><aaa></aaa></p>
+		<bbb></bbb>
+	</div>
+
+</div>
+	<!-- 模板单独放置 -->
+	<script type='x-template' id='aaa'>
+		<h2 @click='change'>title h2--->{{datas}}</h2>
+		<ul>
+			<li>1234</li>
+			<li>1234</li>
+			<li>1234</li>
+			<li>1234</li>
+		</ul>
+	</script>
+	<template id='bbb'>
+		<h1>title</h1>
+		<ul>
+			<li v-for='item in list'>{{item}}</li>
+		</ul>
+	</template>
+	
+	<script>
+		var Aaa = Vue.extend({
+			template:'<h3>Aaa组件————{{datas}}</h3>',
+			data(){
+				return {
+					msg:'组卷aaa的数据'
+				}
+			}
+		});
+		/*在此就是全局组件，放在实例化对象里面，就成了局部组建*/
+		// Vue.component('aaa',Aaa);
+		// 
+		// 另一种方式，直接调用component
+		Vue.component('Bbb',{
+			template:'<B>直接component定义组件<B>'
+		});
+
+		new Vue({
+			data:{
+				bSign:true
+			},
+			methods:{
+				toggle:function(){
+					this.bSign=!this.bSign;
+				}
+			},
+			transitions:{
+				/*定义动画名称*/
+				fade1:{
+					enterClass:'zoomInLeft',
+					leaveClass:'zoomOutRight'
+				}
+			},
+			components:{/*局部组件*/
+				'aaa':{
+					data(){
+						return {
+							datas:'局部组件的数据'
+
+						}
+					},
+					methods:{
+						change(){
+							console.info(this);
+							this.datas='更改了局部组件的数据';
+							// alert('aaa');	
+						}
+					},
+					template:"#aaa"/* 此处是模板的id*/
+				},
+				'bbb':{
+					data(){
+						return {
+							list:['模板1','模板2']
+						}
+					},
+					template:'#bbb'
+
+
+				}
+			}
+		}).$mount('#box');
+	</script>
+</body>
+</html>
