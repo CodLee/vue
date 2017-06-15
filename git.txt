@@ -14,3 +14,6 @@ git status 查看状态
 git add . 添加所有到本地仓库
 git commit -m  '提交'
 git remote -v 查看仓库
+
+
+touch .gitignore  建立 .gitignore 文件
