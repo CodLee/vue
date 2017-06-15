@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue组件--动态组件</title>
+	<link rel="stylesheet" href="../../common/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../common/animate/animate.min.css">
+	<script src="../../common/vue/dist/vue.js"></script>
+	<script src='../../common/vue-router/dist/vue-router.min.js'></script>
+	<style>
+		.v-link-active{
+			background-color: #ccc;
+		}
+	</style>
+</head>
+<body>
+<p></p>
+<div class="container">
+<p>单独文件，下载引入 vue-router</p>
+<p>在vue中链接a标签使用v-link='{path:"/home"}' </p>
+<p>多节路由用到subRoutes:{} <br> 模板内部使用router-view进行展示 v-link='{path:"/home"}' </p>
+	<div id="box">
+		<ul>
+			<!-- <li><a href="" v-link='{path:"/home/login"}'>登录</a></li> -->
+			<li><a href="" v-link='{path:"/home"}'>主页</a></li>
+			<li><a href="" v-link='{path:"/news"}'>新闻</a></li>
+			<li><a href="" v-link='{path:"/fun"}'>娱乐</a></li>
+			<li><a href="" v-link='{path:"/ace"}'>体育</a></li>
+		</ul>
+		<div>
+			<router-view></router-view>
+		</div>
+	</div>
+
+</div>
+	<template id='home'>
+		<h1>主页</h1>
+		<ul>
+			<li><a href="" v-link='{path:"/home/login"}'>登录</a></li> 
+			<li><a href="" v-link='{path:"/home/reg"}'>注册</a></li> 
+		</ul>
+		<div>
+			<router-view>作为模板路由展示的页面</router-view>
+		</div>
+	</template>
+	<template id='news'>
+		<h1>新闻</h1>
+		<div>
+			<a  href="" v-link='{path:"/news/detail/001"}'>新闻001</a>
+			<a  href="" v-link='{path:"/news/detail/002"}'>新闻002</a>
+			<a  href="" v-link='{path:"/news/detail/003"}'>新闻003</a>
+			<a  href="" v-link='{path:"/news/detail/004"}'>新闻004</a>
+			<a  href="" v-link='{path:"/news/detail/005"}'>新闻005</a>
+		</div>
+		<div>
+			<router-view>作为模板路由展示的页面</router-view>
+		</div>
+
+	</template>
+	<template id='fun'>
+		<h1>娱乐</h1>
+	</template>
+	<template id='ace'>
+		<h1>体育</h1>
+	</template>
+	<template id='details'>
+		<h1>详细信息——————{{$route.params | json}}</h1>
+		<p>$route.params| json———{{ $route.params | json}}</p>
+		<p>$route.path——当前路径—{{ $route.path}}</p>
+		<p>$route.query——查询字符串——{{ $route.query|json}}</p>
+		<!-- <div>
+			<router-view></router-view>
+		</div> -->
+	</template>
+	<script>
+	/*准备根组件*/
+	var App = Vue.extend();
+
+	// 2 home new组件
+	var Home =Vue.extend({
+		template:'#home'
+	});
+	var News =Vue.extend({
+		template:'#news'
+	});
+	var Fun =Vue.extend({
+		template:'#fun'
+	});
+	var Ace =Vue.extend({
+		template:'#ace'
+	});
+	var Detail =Vue.extend({
+		template:'#details'
+	});
+	/*3 准备路由*/
+	var router = new VueRouter();
+	/* 4 关联*/
+	router.map({
+		'home':{
+			component:Home,
+			subRoutes:{
+				'login':{
+					component:{
+						template:'<h3>登录信息</h3>'
+					}
+				},
+				'reg':{
+					component:{
+						template:'<h3>注册信息</h3>'
+					}
+				}
+			}
+		},
+		'news':{
+			component:News,
+			subRoutes:{
+				'/detail/:id':{
+					component:Detail
+				}
+			}
+		},
+		'fun':{
+			component:Fun
+		},
+		'ace':{
+			component:Ace
+		}
+	});
+	/* 5 启动路由*/
+	router.start(App,"#box");
+
+	/* 5 or 6 跳转--启动前后都可以*/
+	router.redirect({
+		'/':'/home'
+	});
+
+		/*new Vue({
+			data:{
+				msg:'一级组件的数据'
+			},
+			methods:{
+			},
+			components:{
+				'aaa':{
+					template:'#bbb',
+					data(){
+						return {
+							msg:'组件自身的--数据数据数据'
+						}
+					}
+				}
+			}
+		
+		}).$mount('#box');*/
+	</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue组件--动态组件</title>
+	<link rel="stylesheet" href="../../common/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../common/animate/animate.min.css">
+	<script src="../../common/vue/dist/vue.js"></script>
+	<style>
+
+	</style>
+</head>
+<body>
+<p></p>
+<div class="container">
+	<input type="date"/> 
+	<div id="box">
+		<button @click='change'>切换</button>
+		<!-- <button>bbb</button> -->
+		<hr>
+		<p>:is=‘组件名称’</p>
+		<p>默认情况下，子组件无法访问父组件的数据</p>
+		<p>利用属性传递父子组件间的数据 props:</p>
+		<hr>
+		<p>子组件传递父组件</p>
+		<p>在子组件中使用send(){}函数，this.$emit('方法名1'，数据)</p>
+		<p>在模板中使用 @方法名1 ='方法2' 传递</p>
+		<p>在组件中，定义——方法2进行数据操作，其中方法2的参数就是传递的数据</p>
+		<!-- <component :is='msg?"aaa":"bbb"'></component>	 -->
+		<component :is='"aaa"' :msg0='list'></component>
+	</div>
+
+</div>
+	<template id='aaa'>
+		<h1>title---{{title}}</h1>
+		<button @click='send()'>父传子</button>		
+		<ul>
+			<li v-for='item in list'>{{item}}</li>
+		</ul>
+		<bbbs :m='onoff?num:0' :n='list' @msg-get='get' @msg-get1='get1'></bbbs>
+	</template>
+	<template id='bbb'>
+		<h1>title---{{title}}</h1>
+		<button @click='send()'>子组件传父组件</button>
+		<p>{{m}}</p>
+		<ul>
+			<li v-for='item in list'>{{item}}</li>
+			<li v-for='item in n'>{{item}}</li>
+		</ul>
+	</template>
+	
+	<script>
+
+		new Vue({
+			data:{
+				msg:false,
+				list:[1,2,3,4,5]
+			},
+			methods:{
+				change(){
+
+					this.msg=!this.msg;
+				}
+			},
+			components:{
+				aaa:{
+					props:['msg0'],
+					data(){
+						return {
+							title:'父组件的数据',
+							num:123,
+							list:['父组件1','父组件2','父组件3','父组件4'],
+							onoff:false
+						}
+					},
+					methods:{
+						send(){
+							this.onoff = !this.onoff;
+							this.num++;
+						},
+						get(datas){
+							this.title = datas;
+							console.info(datas);
+						},
+						get1(datas){
+							this.list = datas;
+						}
+					},
+					template:'#aaa',
+					components:{
+						bbbs:{
+							props:{
+								'm':Number,
+								n:Array
+							},
+							data(){
+								return {
+									title:'子组件的数据',
+									list:['子1','子2','子3','子4']
+								}
+							},
+							methods:{
+								send(){
+									this.$emit('msg-get',this.title);
+									this.$emit('msg-get1',this.list);
+								}
+							},
+							template:'#bbb'
+						}
+					}
+				}
+			}
+		
+		}).$mount('#box');
+	</script>
+</body>
+</html>

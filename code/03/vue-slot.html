@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue组件--动态组件</title>
+	<link rel="stylesheet" href="../../common/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../common/animate/animate.min.css">
+	<script src="../../common/vue/dist/vue.js"></script>
+	<style>
+
+	</style>
+</head>
+<body>
+<p></p>
+<div class="container">
+<p>使用slot标签来站位，这样模拟板内部有的东西不会被完全替代</p>
+<p>多个slot的情况，代表的是多份站位，想要slot占据特定的东西，则是使用<b>slot添加name属性相对应</b>,在模板中给相应的标签加 slot ='name' 的属性 </p>
+	<div id="box">
+		<aaa>
+			<ul slot='ul-solit'>
+				<li>123456</li>
+			</ul>
+			{{msg}}
+			<ol slot='ol-solit'>
+				<li>54321</li>
+			</ol>
+		</aaa>	
+		<hr>
+		<aaa></aaa>
+	</div>
+
+</div>
+	<template id='aaa'>
+		<bbbs :m='onoff?num:0' :n='list' @msg-get='get' @msg-get1='get1'></bbbs>
+	</template>
+	<template id='bbb'>
+		<h1>惺惺惜惺惺</h1>
+		<slot name='ol-solit'>这是站位的slot</slot>
+		<p>----{{msg}}</p>
+		<slot name='ul-solit'>这是站位的slot</slot>
+		<slot name='ol-solit'>这是站位的slot</slot>
+	</template>
+	
+	<script>
+
+		new Vue({
+			data:{
+				msg:'一级组件的数据'
+			},
+			methods:{
+			},
+			components:{
+				'aaa':{
+					template:'#bbb',
+					data(){
+						return {
+							msg:'组件自身的--数据数据数据'
+						}
+					}
+				}
+			}
+		
+		}).$mount('#box');
+	</script>
+</body>
+</html>

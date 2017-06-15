@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue组件--动态组件</title>
+	<link rel="stylesheet" href="../../common/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../common/animate/animate.min.css">
+	<script src="../../common/vue/dist/vue.js"></script>
+	<script src='../../common/vue-router/dist/vue-router.min.js'></script>
+	<style>
+
+	</style>
+</head>
+<body>
+<p></p>
+<div class="container">
+<p>单独文件，下载引入 vue-router</p>
+<p>在vue中链接a标签使用v-link='{path:"/home"}' </p>
+	<div id="box">
+		<ul>
+			<li><a href="" v-link='{path:"/home"}'>主页</a></li>
+			<li><a href="" v-link='{path:"/news"}'>新闻</a></li>
+			<li><a href="" v-link='{path:"/fun"}'>娱乐</a></li>
+			<li><a href="" v-link='{path:"/ace"}'>体育</a></li>
+		</ul>
+		<div>
+			<router-view></router-view>
+		</div>
+	</div>
+
+</div>
+	
+	<script>
+	/*准备根组件*/
+	var App = Vue.extend();
+
+	// 2 home new组件
+	var Home =Vue.extend({
+		template:'<h3>主页</h3>'
+	});
+	var News =Vue.extend({
+		template:'<h3>新闻</h3>'
+	});
+	/*3 准备路由*/
+	var router = new VueRouter();
+	/* 4 关联*/
+	router.map({
+		'home':{
+			component:Home
+		},
+		'news':{
+			component:News
+		}
+	});
+	/* 5 启动路由*/
+	router.start(App,"#box");
+
+	/* 5 or 6 跳转--启动前后都可以*/
+	router.redirect({
+		'/':'/home'
+	});
+
+		/*new Vue({
+			data:{
+				msg:'一级组件的数据'
+			},
+			methods:{
+			},
+			components:{
+				'aaa':{
+					template:'#bbb',
+					data(){
+						return {
+							msg:'组件自身的--数据数据数据'
+						}
+					}
+				}
+			}
+		
+		}).$mount('#box');*/
+	</script>
+</body>
+</html>
