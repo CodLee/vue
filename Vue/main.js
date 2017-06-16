@@ -2,20 +2,17 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router'
 import App from './App.vue';
-
+/*使用路由*/
 Vue.use(VueRouter);
-/*引入模块*/
-import Home from './components/Home.vue'
-import News from './components/News.vue'
+/*引入路由模块*/
+import routerConfig from './router.config.js';
+/*配置路由*/
 const router = new　VueRouter();
-router.map({
-	'home':{
-		component:Home
-	},
-	'news':{
-		component:News
-	}
-});
+
+/**/
+router.map(routerConfig);
+
+
 /*开启路由*/
 router.start(App,"#app");
 /*new Vue({
@@ -23,4 +20,4 @@ router.start(App,"#app");
 	components:{
 		app:App
 	}
-});*/
+});
