@@ -1,13 +1,29 @@
 /*引入模块*/
-import Home from './components/Home.vue'
-import News from './components/News.vue'
+import Home from './components/Home.vue';
+import News from './components/News.vue';
+import Login from './components/Login.vue';
+import Reg from './components/Reg.vue';
+import DetailVue from './components/DetailVue.vue';
 
 /*导出模块*/
 export default{
-	'home':{
-		component:Home
+	'/home':{
+		component:Home,
+		subRoutes:{
+			'/login':{
+				component:Login
+			},
+			'/reg':{
+				component:Reg
+			}
+		}
 	},
-	'news':{
-		component:News
+	'/news':{
+		component:News,
+		subRoutes:{
+			'/detail/:id':{
+				component:DetailVue
+			}
+		}
 	}
 };

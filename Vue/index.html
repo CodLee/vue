@@ -3,29 +3,21 @@
 <head>
 	<meta charset="UTF-8">
 	<title>VUE-webpack-ES6-开发</title>
+	<style>
+		.container{
+			width: 1000px;
+			margin: 0 auto;
+		}
+	</style>
 </head>
 <body>
-	<app></app>
-	<div id="app"></div>
-	<p>npm run dev 运行package.json命令</p>
+	<div class="container">
+		
+		<p>npm run dev 运行package.json命令</p>
+		<p>npm run build 运行package.json命令 webpack -p 压缩打包【之后直接引入即可】</p>
+		<hr>
+		<div id="app"></div>
+	</div>
 	<script src='./build.js'></script>
-
-
-
-
-
-
-
-	
-	<script type='text/javascript'>
-
-		console.info('1234');
-	</script>
-	<script type='text/babel'>
-		console.info('1234');
-	</script>
-	<script type='text/jsx'>
-		console.info('1234');
-	</script>
 </body>
 </html>
