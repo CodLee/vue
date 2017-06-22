@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue2.0--生命周期</title>
+	<!-- // <script src='../../common/vue.js'></script> -->
+
+	<!-- // <script src="../../common/vue/dist/vue.js"></script> -->
+	// <script src='../../common/vue2.0.js'></script>
+</head>
+<body>
+<div id="vue">
+	<p>{{msg}}</p>
+	<button @click='update()'>更新数据</button>
+	<hr>
+	<button @click ='destroyed()'>销毁vm</button>
+</div>
+ <template id="aaa">
+        <div>
+            <h3>我是组件--组件名称不能任意定义，标签名使用小写字母</h3>
+            <strong>我是加粗标签</strong>
+        </div>
+ </template>
+
+	<script>
+	console.info(Vue.version);
+		var vm = new Vue({
+			data:{
+				msg:'welcome to Vue2.0'
+			},
+			methods:{
+				update(){
+					this.msg = 'welcome to Vue2.0 update'
+				},
+				destroyed(){
+					this.$destroy();
+				}
+			},
+			beforeCreate(){
+				console.info('1 组件实例化刚刚被创建，new vue');
+			},
+			created(){
+				console.log('2 例创建完成');
+			},
+			beforeMount(){
+				console.info('3 模板编译之前 beforeMount');
+			},
+			mounted(){
+				console.log('4 mounted--模板编译之后--ready')
+			},
+			beforeUpdate(){
+				console.log('5 更新之前');
+			},
+			updated(){
+				console.log('6 更新之后');
+			},
+			beforeDestroy(){
+				console.log('7 组件销毁前');
+			},
+			destroyed(){
+				console.log('8 组件销毁后');
+			}
+		}).$mount('#vue');
+
+	</script>
+</body>
+</html>

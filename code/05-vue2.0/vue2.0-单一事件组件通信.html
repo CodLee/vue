@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue2.0--过滤器</title>
+	<!-- // <script src='../../common/vue.js'></script> -->
+
+	<!-- // <script src="../../common/vue/dist/vue.js"></script> -->
+	<script src='../../common/vue2.0.js'></script>
+</head>
+<body>
+<div id="vue">
+	<p>{{msg}}</p>
+	<comp-a></comp-a>
+	<comp-b></comp-b>
+	<comp-c></comp-c>
+</div>
+
+<template id='child'>
+	<div style='border:1px solid #ccc'>
+		<h4>子组件</h4>
+	</div>
+</template>
+<template id='childa'>
+	<div style='border:1px solid #ccc'>
+		<h4>子组件</h4>
+	</div>
+</template>
+<template id='childb'>
+	<div style='border:1px solid #ccc'>
+		<h4>子组件</h4>
+	</div>
+</template>
+	<script>
+	console.info(Vue.version);
+		var Event = new Vue();
+		var A = {
+			template:'<div><h3>组件A</h3>{{msg}}<button @click="transfor">传递数据给C</button></div>',
+			data(){
+				return {
+					msg:'a组件的数据'
+				}
+			},
+			methods:{
+				transfor(){
+					Event.$emit('a-msg',this.msg);
+				}
+			}
+		}
+		var B= {
+			template:'<div><h3>组件B</h3>{{msg}}<button @click="transfor">传递数据给C</button></div>',
+			data(){
+				return {
+					msg:'B组件的数据'
+				}
+			},
+			methods:{
+				transfor(){
+					Event.$emit('b-msg',this.msg);
+				}
+			}
+		}
+		var C = {
+			template:'<div><h3>c组件</h3><p>数据c-{{msg}}</p><p>{{msga}}---{{msgb}}</p></div>',
+			data(){
+				return {
+					msg:'C组件的数据',
+					msga:'',
+					msgb:''
+				}
+			},
+			mounted(){
+				alert('c组件-mounted');
+				var _this = this;
+				Event.$on('a-msg',function(a){
+					alert(a);
+					/*此时的this指针改变了*/
+					this.msga = a;
+				}.bind(this));
+				Event.$on('b-msg',function(b){
+					_this.msgb=b;
+				})
+			}
+		}
+		var vm = new Vue({
+			data:{
+				msg:'welcome to vue2.0  组件的通信',
+				msgf:'父组件的数据',
+				giveData:{
+					a:'父组件的数据对象'
+				}
+
+			},
+			methods:{
+				change(){
+					console.info('ctr');
+				}
+			},
+			components:{
+				child:{
+					template:'#child',
+					props:['msg','msgobj'],
+					data(){
+						return {
+							msg1:'子组件的数据'
+						}
+					},
+					methods:{
+						change(){
+							this.msg = '更改了数据';
+						},
+						changeObj(){
+							this.msgobj.a = '+--父组件的数据对象内容被更改了'
+						}
+					}
+				},
+				'comp-a':A,
+				'comp-b':B,
+				'comp-c':C
+			}
+
+		}).$mount('#vue');
+
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue2.0--组件通讯</title>
+	<!-- // <script src='../../common/vue.js'></script> -->
+
+	<!-- // <script src="../../common/vue/dist/vue.js"></script> -->
+	// <script src='../../common/vue2.0.js'></script>
+</head>
+<body>
+<div id="vue">
+	<p>{{msg}}</p>
+	<p>{{msgf}}-----同步更改---.sync，2.0  不允许【同步】更改父组件的数据</p>
+	<p>父组件的数据对象----{{giveData.a}}</p>
+	<p>{{b}}</p>
+	<hr>
+	<p>组件间的通讯名称使用小写字母---</p>
+	<child  :msg.sync='msgf' :msgobj='giveData' :msgb='b'></child>
+	<hr>
+</div>
+
+<template id='child'>
+	<div style='border:1px solid #ccc'>
+		<h4>子组件</h4>
+		{{msg1}}---- <button @click='change'>change</button>
+		<p>父组件的数据---{{msg}}----{{msg1}}</p>
+		<button @click='changeObj()'>change-object</button>
+		<p>{{msgobj.a}}</p>
+		<p @click='changeB'>B===={{msgb}}--{{b}}</p>
+	</div>
+</template>
+	<script>
+		console.info(Vue.version);
+		var vm = new Vue({
+			data:{
+				msg:'welcome to vue2.0  组件的通信',
+				msgf:'父组件的数据',
+				giveData:{
+					a:'父组件的数据对象'
+				},
+				b:'父组件B的数据'
+			},
+			components:{
+				child:{
+					template:'#child',
+					props:['msg','msgobj','msgb'],
+					data(){
+						return {
+							msg1:'子组件的数据',
+							b:''
+						}
+					},
+					mounted(){
+						this.b = this.msgb;
+						console.info(this);
+						console.info('组件B挂载');
+					},
+					methods:{
+						change(){
+							this.msg = '更改了数据';
+						},
+						changeObj(){
+							this.msgobj.a = '+--父组件的数据对象内容被更改了'
+						},
+						changeB(){
+							this.b='更改传递的B的数据'
+						}
+					}
+
+				}
+			}
+		}).$mount('#vue');
+
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue-transtion</title>
+	<script src="../../common/vue2.0.js"></script>
+	<link rel="stylesheet" href="../../common/animate.css">
+	<style>
+		.title{
+			font-size: 20px;
+			background-color: #ccc;
+		}
+	</style>
+</head>
+<body>    
+<p>vue 1 动画  .fade-transition + .fade-enter +.fade-leave  </p>
+<div id="vue">
+	<p :class='{title:true}'>{{msgTitle}}</p>
+	<p>使用transiton 标签，<b>name属性</b>，@事件</p>
+	<input type="button" value="click change" @click='show = !show'>
+	<div v-show='show'>1234</div>
+	<transition name='fade'
+		@before-enter ='boforeEnter'
+		@enter='enter'
+		@after-enter='after-enter'
+		@before-leave ='boforeleave'
+		@leave='leave'
+		@after-leave='after-leave'
+
+
+	>	
+		<p v-show='show'></p>
+	</transition>
+</div>
+
+
+<script>
+	new Vue({
+		data:{
+			show:true,
+			msgTitle:'transtion来定义动画'
+		},
+		methods:{
+
+		}
+	}).$mount('#vue')
+</script>
+</body>
+</html>

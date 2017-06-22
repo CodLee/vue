@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue-transtion-animate</title>
+	<script src="../../common/vue2.0.js"></script>
+	<link rel="stylesheet" href="../../common/animate.css">
+	<style>
+		.title{
+			font-size: 20px;
+			background-color: #ccc;
+		}
+		p{
+			width: 100px;
+			height: 100px;
+			background-color: #f60;
+			margin:10px auto;
+			line-height: 100px;
+			text-align: center;
+			border-radius:30px;
+		}
+	</style>
+</head>
+<body>    
+<div>vue 1 动画  .fade-transition + .fade-enter +.fade-leave  </div>
+<div class="">transition 配合amimate使用 <br>
+给transition直接加enter-active-class='' leave-active-class='',改变的元素加class='animated'/animated卸载enter-active-class/leave-active-class</div>
+<div>多个元素添加：transition-group,运动元素必须加  :key属性</div>
+<div id="vue">
+<button @click='show = !show'>点击动画</button>
+	<transition enter-active-class='bounceInLeft' leave-active-class='bounceOutRight'>
+		<p v-show='show' class='animated'></p>
+	</transition>
+	<input type="text" v-model='shows'>
+	<transition-group enter-active-class='zoomInLeft' leave-active-class='zoomOutRight'>
+		<p v-for='(val,index) in lists' class='animated' :key='index'>{{val}}</p>
+	</transition-group>
+</div>
+
+
+<script>
+
+	new Vue({
+		data:{
+			show:true,
+			shows:'',
+			msgTitle:'transtion来定义动画',
+			list:['apple','banana','car','dog']
+		},
+		methods:{
+
+		},
+		computed:{
+			lists:function(){
+				var arr=[];
+				this.list.forEach(function(val,index){
+					if(val.indexOf(this.shows)!= -1){
+						//indexOf() 返回某个字符在字符串中出现的位置，没出现则返回-1
+						arr.push(val);
+					}
+				}.bind(this));
+				return arr;
+			}
+		}
+	}).$mount('#vue')
+</script>
+</body>
+</html>

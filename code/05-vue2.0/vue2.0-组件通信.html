@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue2.0--过滤器</title>
+	<!-- // <script src='../../common/vue.js'></script> -->
+
+	<!-- // <script src="../../common/vue/dist/vue.js"></script> -->
+	// <script src='../../common/vue2.0.js'></script>
+</head>
+<body>
+<div id="vue">
+	<p>{{msg}}</p>
+	<p>{{msgf}}-----同步更改---.sync，2.0  不允许【同步】更改父组件的数据</p>
+	<p>父组件的数据对象----{{giveData.a}}</p>
+	<hr>
+	<child  :msg.sync='msgf' :msgobj='giveData'></child>
+	<hr>
+</div>
+
+<template id='child'>
+	<div style='border:1px solid #ccc'>
+		<h4>子组件</h4>
+		{{msg1}}---- <button @click='change'>change</button>
+		<p>父组件的数据---{{msg}}</p>
+		<button @click='changeObj()'>change-object</button>
+		<p>{{msgobj.a}}</p>
+	</div>
+</template>
+	<script>
+	console.info(Vue.version);
+
+	/*vue 1.0 */
+	// Vue.derective('on').keyCode.ctrl=17;
+	// 
+	// 
+	/* vue 2.0  统一使用*/
+	// Vue.config.keyCodes.ctrl =17;
+
+/*自定义过滤器--传参-*/
+	Vue.filter('toDo',function(input,a,b){
+		alert('自定义过滤器被调用了———传参变化xxx(a,b)———'+input+'--'+a+'--'+b);
+		return input;
+	});
+		var vm = new Vue({
+			data:{
+				msg:'welcome to vue2.0  组件的通信',
+				msgf:'父组件的数据',
+				giveData:{
+					a:'父组件的数据对象'
+				}
+
+			},
+			methods:{
+				change(){
+					console.info('ctr');
+				}
+			},
+			components:{
+				child:{
+					template:'#child',
+					props:['msg','msgobj'],
+					data(){
+						return {
+							msg1:'子组件的数据'
+						}
+					},
+					methods:{
+						change(){
+							this.msg = '更改了数据';
+						},
+						changeObj(){
+							this.msgobj.a = '+--父组件的数据对象内容被更改了'
+						}
+					}
+
+				}
+			}
+
+		}).$mount('#vue');
+
+	</script>
+
+</body>
+</html>

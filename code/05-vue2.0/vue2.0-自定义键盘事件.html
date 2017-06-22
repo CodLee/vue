@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue2.0--自定义键盘事件</title>
+	<!-- // <script src='../../common/vue.js'></script> -->
+
+	<!-- // <script src="../../common/vue/dist/vue.js"></script> -->
+	// <script src='../../common/vue2.0.js'></script>
+</head>
+<body>
+<div id="vue">
+	<p>{{msg}}</p>
+	<input type="text" @keyup.ctrl='change'>
+	<p>Vue.config.keyCodes.ctrl =17;</p>
+	<p>Vue.derective('on').keyCode.ctrl=17;</p>
+</div>
+
+	<script>
+	console.info(Vue.version);
+
+	/*vue 1.0 */
+	// Vue.derective('on').keyCode.ctrl=17;
+	// 
+	// 
+	/* vue 2.0  统一使用*/
+	Vue.config.keyCodes.ctrl =17;
+
+
+		var vm = new Vue({
+			data:{
+				msg:'welcome to vue2.0  自定义键盘事件'
+			},
+			methods:{
+				change(){
+					console.info('ctr');
+				}
+			}
+		}).$mount('#vue');
+
+	</script>
+</body>
+</html>

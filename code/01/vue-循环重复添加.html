@@ -10,11 +10,11 @@
 
     </style>
     <link rel="stylesheet" href="../common/bootstrap.min.css">
-    <script src="../common/jquery-1.7.2.js"></script>
-    <script src="../common/bootstrap.js"></script>
+    <script src="../../common/jquery-1.7.2.js"></script>
+    <script src="../../common/bootstrap.js"></script>
 
-    <script src="../common/vue.js"></script>
-    <script src="../common/vue-resource.js"></script>
+    <script src="../../common/vue.js"></script>
+    <script src="../../common/vue-resource.js"></script>
     <script>
         window.onload=function(){
            var vm =  new Vue({
@@ -71,7 +71,7 @@
                 <button @click='add($event)'>添加</button>
         </form>
         <ul>
-            <li v-for='item in list' track-by='$index'>{{item}}</li>
+            <li v-for='item in list' track-by='$index'>{{$index}}----{{item}}</li>
         </ul>
     </div>
 </body>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue-transtion-animate</title>
+	<script src="../../common/vue2.0.js"></script>
+	<script src='../../common/vue-router2/vue-router.min.js'></script>
+	<link rel="stylesheet" href="../../common/animate.css">
+	<style>
+		.title{
+			font-size: 20px;
+			background-color: #ccc;
+		}
+		p{
+			width: 100px;
+			height: 100px;
+			background-color: #f60;
+			margin:10px auto;
+			line-height: 100px;
+			text-align: center;
+			border-radius:30px;
+		}
+		.router-link-active{
+			color:#f60;
+		}
+	</style>
+</head>
+<body>    
+	 <section>
+	 	<div>$route.params -----router.push(),rouer.replace()</div>
+	 </section>
+<div id="vue">
+	<button @click='push'>点击添加，添加了历史记录</button>
+	<button @click='replace'>替换,不刷新</button>
+	<div>
+		<router-link to='/home'>主页</router-link>
+		<router-link to='/news'>新闻</router-link>
+		<router-link to='/user'>用户</router-link>
+	</div>
+	<div>
+		<transition enter-active-class='animated bounceInLeft'
+		leave-active-class='animated bounceOutRight'>
+			
+			<router-view>数据展示区</router-view>
+		</transition>	
+	</div>
+</div>
+
+
+<script>
+var Home ={
+	template:'<h3>home</h3>'
+}
+var News ={
+	template:'<h3>news</h3>'
+}
+var User ={
+	template:'<div><h3>user</h3> <ul><li><router-link to="/user/userinfo1/age/13">用户信息1</router-link></li><li><router-link to="/user/userinfo2/age/30">用户信息2</router-link></li><li><router-link to="/user/userinfo3/age/40">用户信息3</router-link></li></ul><div><router-view></router-view></div></div>'
+}
+var Userinfo={
+	template:'<div>用户信息-$route.param--{{$route.params}}</div>'
+}
+/*配置路由，生成实例*/
+var routes =[
+	{path:'/home',component:Home},
+	{path:'/news',component:News},
+	{	path:'/user',
+		component:User,
+		children:[
+			{path:':userinfo/age/:age',component:Userinfo}
+		]
+
+	},
+	{path:'*',redirect:'/home'}
+];
+const router = new VueRouter({
+	routes
+});
+
+	new Vue({
+		data:{
+			show:true,
+			shows:'',
+			msgTitle:'router路由',
+			list:['apple','banana','car','dog']
+		},
+		methods:{
+			push(){
+				router.push({path:'home'})
+			},
+			replace(){
+				router.replace({path:'user'})
+			}
+
+		},
+		computed:{
+		},
+		router:router
+	}).$mount('#vue')
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue2.0--过滤器</title>
+	<!-- // <script src='../../common/vue.js'></script> -->
+
+	<!-- // <script src="../../common/vue/dist/vue.js"></script> -->
+	// <script src='../../common/vue2.0.js'></script>
+</head>
+<body>
+<div id="vue">
+	<p>{{msg}}</p>
+	<p> msg | currency    没有 内置的 过滤器--loadsh工具库</p>
+	<p>{{number}}-----{{number | currency}}</p>
+	<p>{{json}}-----{{json }}</p>
+	<input type="text" @keyup.ctrl='change'>
+	<p>vue1.0--自定义的过滤器---{{str}}----{{str | toDo('1',2)}}</p>
+</div>
+
+	<script>
+	console.info(Vue.version);
+
+	/*vue 1.0 */
+	// Vue.derective('on').keyCode.ctrl=17;
+	// 
+	// 
+	/* vue 2.0  统一使用*/
+	Vue.config.keyCodes.ctrl =17;
+
+/*自定义过滤器--传参-*/
+	Vue.filter('toDo',function(input,a,b){
+		alert('自定义过滤器被调用了———传参变化xxx(a,b)———'+input+'--'+a+'--'+b);
+		return input;
+	});
+		var vm = new Vue({
+			data:{
+				msg:'welcome to vue2.0  内置的过滤器全部删除',
+				number:134,
+				json:{
+					a:1,
+					b:2
+				},
+				str:'abcd'
+
+
+			},
+			methods:{
+				change(){
+					console.info('ctr');
+				}
+			}
+		}).$mount('#vue');
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue2.0--{{}}</title>
+	<!-- // <script src='../../common/vue.js'></script> -->
+
+	<!-- // <script src="../../common/vue/dist/vue.js"></script> -->
+	// <script src='../../common/vue2.0.js'></script>
+</head>
+<body>
+<div id="vue">
+	<p>{{msg}}</p>
+	<input type="text" v-model='addmsg'>
+	<button @click='add'>添加</button>
+	<p>默认不能添加重复数据---没有track-by 默认可以添加重复数据</p>
+	<p><b>隐式变量取消--$index----转而使用（value ,index）</b></p>
+	<ul>
+		<li v-for='(value,index) in list' track-by='index'>
+			{{index}}-----{{value}}
+		</li>
+	</ul>
+	<p>json数据 （value,key）</p>
+	<ol>
+		<li v-for='(val,key) in json'>
+			key---{{key}}:---value--{{val}}
+		</li>
+	</ol>
+
+</div>
+ <template id="aaa">
+        <div>
+            <h3>我是组件--组件名称不能任意定义，标签名使用小写字母</h3>
+            <strong>我是加粗标签</strong>
+        </div>
+ </template>
+
+	<script>
+	console.info(Vue.version);
+		var vm = new Vue({
+			data:{
+				msg:'welcome to vue2.0 循环 v-for',
+				list:['width','height','fontsize'],
+				addmsg:'122434',
+				json:{
+					a:'apple',
+					b:'banana',
+					c:'car',
+					d:'dog'
+				}
+
+
+			},
+			methods:{
+				add(){
+					if(this.addmsg){
+						this.list.push(this.addmsg);
+						this.addmsg='';
+					}
+				}
+			}
+		}).$mount('#vue');
+
+	</script>
+</body>
+</html>
