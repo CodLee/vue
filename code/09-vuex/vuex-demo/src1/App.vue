@@ -19,6 +19,7 @@
     computed:mapGetters([
       'count',
       'getOdd'
+      
     ]),
     methods:mapActions([
       'increment',

@@ -22,30 +22,30 @@ const actions = {
 	}) => {
 		commit('increment')//名字可以随意
 	},
-	decrement: ({
-		commit
-	}) => {
-		commit('decrement');
-	},
-	clickOdd: ({
-		commit,
-		state
-	}) => {
-		if (state.count % 2 == 0) {
-			commit('increment')
-		}
-	},
-	clickAsync: ({
-		commit
-	}) => {
-		new Promise((resolve) => {
-			setTimeout(function() {
-				commit('increment');
+		decrement: ({
+			commit
+		}) => {
+			commit('decrement');
+		},
+		clickOdd: ({
+			commit,
+			state
+		}) => {
+			if (state.count % 2 == 0) {
+				commit('increment')
+			}
+		},
+		clickAsync: ({
+			commit
+		}) => {
+			new Promise((resolve) => {
+				setTimeout(function() {
+					commit('increment');
 
-				resolve();
-			}, 1000);
-		});
-	}
+					resolve();
+				}, 1000);
+			});
+		}
 };
 
 const getters = {
