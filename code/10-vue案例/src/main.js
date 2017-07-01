@@ -7,9 +7,9 @@ import Loading from './components/Loading'
 import stores from './store/store'
 import routes from './routeConfig.js'
 
-import filters from './filters'
+// import filters from './filters'
 
-Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
+// Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
 
 Vue.use(VueRouter);
 Vue.use(Loading);
